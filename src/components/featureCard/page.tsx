@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { motion } from "framer-motion";
 interface CardProps {
   img: string;
   title: string;
@@ -9,7 +10,11 @@ interface CardProps {
 const FeatureCard: React.FC<CardProps> = ({ img, title, width, height }) => {
   return (
     <>
-      <div className="rounded-xl max-w-[25rem] bg-white flex flex-col space-y-5 justify-center items-center">
+      <motion.div
+        className="rounded-3xl max-w-[25rem] bg-white flex flex-col space-y-5 justify-center items-center"
+        whileHover={{ scale: 1.1 }}
+        transition={{ duration: 0.4 }}
+      >
         <Image
           src={img}
           width={width}
@@ -18,12 +23,12 @@ const FeatureCard: React.FC<CardProps> = ({ img, title, width, height }) => {
           className="py-6"
         />
 
-        <div className="w-full rounded-b-xl bg-green2 ">
-          <h3 className="text-3xl font-semibold text-white text-center px-4">
+        <div className="w-full rounded-b-3xl bg-green2 h-full items-center flex justify-center py-2">
+          <h3 className="lg:text-3xl md:text-2xl text-xl font-semibold text-white text-center px-4 max-w-sm">
             {title}
           </h3>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };
