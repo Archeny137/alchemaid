@@ -135,7 +135,7 @@ const Hero = () => {
         formData.append("file", file);
 
         const response = await fetch(
-          "https://diabeticretnopathy-fmaprfvioa-de.a.run.app",
+          "https://diabeticretinopathy-fmaprfvioa-de.a.run.app",
           {
             method: "POST",
             body: formData,
