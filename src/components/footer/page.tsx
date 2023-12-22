@@ -1,4 +1,6 @@
 import { FaInstagram } from "react-icons/fa";
+import Button from "../button/page";
+import { IoLogoGithub } from "react-icons/io";
 const Footer = () => {
   return (
     <>
@@ -14,16 +16,26 @@ const Footer = () => {
 
         <ul className={"flex space-x-8 text-black dark:text-white pb-4"}>
           <a
-            href={"https://www.instagram.com/tasc_nmamit/"}
+            href={"https://www.github.com/codcrunch/alchemaid"}
             target={"_blank"}
             className="duration-200 hover:scale-110"
           >
-            <FaInstagram />
+            <IoLogoGithub size={30} />
           </a>
         </ul>
 
-        <a href="https://github.com/tasc-nmamit" target="_blank">
-          <span className="md:text-md text-sm pt-4">Team Code Crunch</span>
+        <span className="md:text-md text-sm pt-4">Team Code Crunch</span>
+      </div>
+
+      <div className="flex justify-center w-full items-center gap-x-5 pb-5">
+        <a href="/?user=none">
+          <Button text={"Logout"} />
+        </a>
+        <a href="/?user=doctor">
+          <Button text={"Doctor"} />
+        </a>
+        <a href="/?user=patient">
+          <Button text={"Patient"} />
         </a>
       </div>
     </>

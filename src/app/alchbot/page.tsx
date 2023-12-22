@@ -5,9 +5,13 @@ import axios from "axios";
 import ChatBubble from "./ChatBubble";
 import styles from "./ChatInterface.module.css";
 import Navbar from "@/components/navbar/page";
+import { IoSend } from "react-icons/io5";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import Footer from "@/components/footer/page";
 
 const ChatInterface: React.FC = () => {
   const [inputText, setInputText] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const [chatHistory, setChatHistory] = useState<
     { text: string; isUser: boolean }[]
   >([]);
@@ -19,14 +23,13 @@ const ChatInterface: React.FC = () => {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    console.log("Sending message:", inputText);
-
     const postmessage = {
       message: inputText,
     };
 
     try {
       const url = "https://alchbot-fmaprfvioa-de.a.run.app";
+      setLoading(true);
       const { data } = await axios.post(url, postmessage);
 
       const newChat = {
@@ -41,6 +44,7 @@ const ChatInterface: React.FC = () => {
 
       setChatHistory((prevChat) => [...prevChat, newChat, botResponse]);
       setInputText("");
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching response:", error);
     }
@@ -54,19 +58,31 @@ const ChatInterface: React.FC = () => {
             <ChatBubble key={index} text={chat.text} isUser={chat.isUser} />
           ))}
         </div>
-        <form onSubmit={handleSubmit} className={styles.chatForm}>
+        <form
+          onSubmit={handleSubmit}
+          className={
+            " flex md:space-x-4 space-x-2 justify-center items-center max-w-[90vw] mx-auto"
+          }
+        >
           <input
             type="text"
-            value={inputText}
+            value={loading ? "" : inputText}
             onChange={handleInputChange}
             placeholder="Type your message..."
-            className={styles.chatInput}
+            className={"border md:rounded-xl rounded-md md:py-2 px-4 w-[90vw]"}
           />
-          <button type="submit" className={styles.sendButton}>
-            Send
+          <button type="submit" className={"bg-green2 rounded-xl p-2"}>
+            {loading ? (
+              <div className="rounded-full h-4 w-4 border-b-2 border-white animate-spin">
+                <AiOutlineLoading3Quarters />
+              </div>
+            ) : (
+              <IoSend />
+            )}
           </button>
         </form>
       </div>
+      <Footer></Footer>
     </>
   );
 };
