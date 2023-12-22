@@ -1,6 +1,10 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  createUserWithEmailAndPassword,
+} from "firebase/auth";
 import { setDoc, doc, writeBatch, collection } from "firebase/firestore";
 import { useAuthContext } from "@/context/AuthContext";
 
@@ -57,11 +61,10 @@ const LoginSection: React.FC = () => {
     name: string;
     password: string;
   }) {
-    console.log("asdf");
     try {
       if (email && password) {
         console.log("Signing up with email and password");
-        await signInWithEmailAndPassword(auth, email, password);
+        await createUserWithEmailAndPassword(auth, email, password);
       }
     } catch (error) {
       setWrongCredentials(true);
@@ -75,7 +78,10 @@ const LoginSection: React.FC = () => {
     batch.set(newUserRef, {
       name: name,
       email: email,
-      password: password,
+      age: age,
+      licenseId: licenseId,
+      specialization: specialization,
+      doctor: selectedType === "Doctor" ? true : false,
       createdAt: new Date().toISOString(),
     });
 
@@ -145,7 +151,7 @@ const LoginSection: React.FC = () => {
                       </DialogTrigger>
 
                       <DialogContent className="py-8">
-                        <div className="flex gap-x-5 justify-between">
+                        <div className="flex gap-x-5 justify-center mx-10">
                           <div className="flex flex-col w-1/2 justify-center items-center">
                             <h1 className="text-center font-bold text-3xl">
                               {`${type.title}`}{" "}

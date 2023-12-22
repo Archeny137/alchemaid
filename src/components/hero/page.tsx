@@ -200,7 +200,7 @@ const Hero = () => {
           <h1 className="md:text-[4rem] text-[1.5rem] md:text-left text-center font-bold text-white">
             Revolutionizing Healthcare
           </h1>
-          <span className="text-md flex justify-center text-center text-white font-semibold bg-green3 w-fit px-4 py-2 rounded-2xl">
+          <span className="text-md flex justify-center text-center text-white font-semibold bg-green3 bg-opacity-30 custome-shdaow bg-blur-2xl w-fit px-4 py-2 rounded-2xl">
             AI Foresees Diseases in Medical Scans
           </span>
           <p className="text-md md:pt-10 pt-4 max-w-3xl text-white">
@@ -284,21 +284,28 @@ const Hero = () => {
                       <div className="flex justify-center">
                         {loading ? (
                           <div className="flex flex-col space-y-4">
-                            <h1 className="text-green-500 md:text-xl text-md">
-                              Results
-                            </h1>
-                            <p>Loading...</p>{" "}
+                            <p className="animate-pulse">
+                              <Image
+                                src="/logo.png"
+                                alt="logo"
+                                width={100}
+                                height={100}
+                              />
+                            </p>{" "}
                           </div>
-                        ) : (
+                        ) : !loading && result ? (
                           <div className="flex flex-col space-y-4">
-                            <h1 className="text-green-500 md:text-xl text-md text-center text-semibold">
+                            <h1 className="text-green-500 md:text-2xl font-bold text-xl text-center text-semibold">
                               Results
                             </h1>
-                            <p>
-                              Diagnosis: <span>{result}</span>
+                            <p className="text-lg">
+                              Diagnosis:{" "}
+                              <span className="font-bold capitalize md:text-2xl text-xl">
+                                {result}
+                              </span>
                             </p>
                           </div>
-                        )}
+                        ) : null}
                       </div>
                     </div>
                   </DialogDescription>

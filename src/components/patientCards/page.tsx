@@ -1,7 +1,7 @@
-import { Fcards } from "@/constants/page";
+import { patientCards } from "@/constants/page";
 import FeatureCard from "../featureCard/page";
 import { motion } from "framer-motion";
-import React, { use, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import {
   Dialog,
@@ -24,7 +24,7 @@ import {
 import Image from "next/image";
 import { Input } from "../ui/input";
 import Button from "../button/page";
-const Features = () => {
+const PatientCards = () => {
   const [selected, setSelected] = useState("pneumonia");
   const [file, setFile] = useState<File | null>(null);
   const [result, setResult] = useState("");
@@ -197,8 +197,8 @@ const Features = () => {
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <div className="grid md:grid-cols-3 grid-cols-1 gap-10 mx-10">
-          {Fcards.map((card, index) => {
+        <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-10 mx-10">
+          {patientCards.map((card, index) => {
             if (card.title === "SCAN IMAGES") {
               return (
                 <>
@@ -353,4 +353,4 @@ const Features = () => {
   );
 };
 
-export default Features;
+export default PatientCards;

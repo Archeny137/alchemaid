@@ -9,6 +9,7 @@ import {
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import firebase_app from "@/firebase/config";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 // Initialize Firebase auth instance
 const auth = getAuth(firebase_app);
@@ -36,6 +37,7 @@ export function AuthContextProvider({
       console.log("Auth State changed");
       if (user) {
         // User is signed in
+        window.location.href = "/#";
         setUser(user);
       } else {
         // User is signed out
