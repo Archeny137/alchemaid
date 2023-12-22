@@ -279,7 +279,7 @@ const LoginSection: React.FC = () => {
                                     />
                                     {!passwordMatch ? (
                                       <p className="text-xs text-red-500">
-                                        Passwords don't match!
+                                        Passwords don&apos;t match!
                                       </p>
                                     ) : null}
                                   </>
