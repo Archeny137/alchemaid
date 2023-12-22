@@ -25,18 +25,6 @@ const Footer = () => {
 
         <span className="md:text-md text-sm pt-4">Team Code Crunch</span>
       </div>
-
-      <div className="flex justify-center w-full items-center gap-x-5 pb-5">
-        <a href="/?user=none">
-          <Button text={"Logout"} />
-        </a>
-        <a href="/?user=doctor">
-          <Button text={"Doctor"} />
-        </a>
-        <a href="/?user=patient">
-          <Button text={"Patient"} />
-        </a>
-      </div>
     </>
   );
 };
