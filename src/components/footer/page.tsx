@@ -1,4 +1,3 @@
-import { FaInstagram } from "react-icons/fa";
 import Button from "../button/page";
 import { IoLogoGithub } from "react-icons/io";
 const Footer = () => {

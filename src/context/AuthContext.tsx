@@ -8,6 +8,7 @@ import {
 } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
 import firebase_app from "@/firebase/config";
+import Image from "next/image";
 
 // Initialize Firebase auth instance
 const auth = getAuth(firebase_app);
@@ -51,7 +52,13 @@ export function AuthContextProvider({
   // Provide the authentication context to child components
   return (
     <AuthContext.Provider value={{ user }}>
-      {loading ? <div>Loading...</div> : children}
+      {loading ? (
+        <div className="flex justify-center items-center h-screen animate-pulse">
+          <Image src="/logo.png" width={100} height={100} alt="logo" />
+        </div>
+      ) : (
+        children
+      )}
     </AuthContext.Provider>
   );
 }
