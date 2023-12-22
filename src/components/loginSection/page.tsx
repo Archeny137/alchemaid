@@ -1,11 +1,7 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  getAuth,
-} from "firebase/auth";
-import { setDoc, doc } from "firebase/firestore";
+import { signInWithEmailAndPassword, getAuth } from "firebase/auth";
+import { setDoc, doc, writeBatch, collection } from "firebase/firestore";
 import { useAuthContext } from "@/context/AuthContext";
 
 const types = [
@@ -29,11 +25,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "../ui/input";
-import { db, auth } from "@/firebase/config";
+import firebase_app from "@/firebase/config";
+import { getFirestore } from "firebase/firestore";
 import { useEffect } from "react";
 import Image from "next/image";
 
 const LoginSection: React.FC = () => {
+  const auth = getAuth(firebase_app);
+  const db = getFirestore(firebase_app);
   const { user } = useAuthContext() as any;
   const [selectedType, setSelectedType] = useState("Patient");
   const [name, setName] = useState("");
@@ -51,45 +50,39 @@ const LoginSection: React.FC = () => {
 
   async function handleSignUp({
     email,
+    name,
     password,
   }: {
     email: string;
+    name: string;
     password: string;
   }) {
-    createUserWithEmailAndPassword(auth, email, password);
-    if (
-      name &&
-      age &&
-      specialization &&
-      licenseId &&
-      email &&
-      password &&
-      password === confirmPassword
-    ) {
-      const docRef = await setDoc(doc(db, "users", email), {
-        name: name,
-        age: selectedType === "Patient" ? age : null,
-        specialization: selectedType === "Doctor" ? specialization : null,
-        licenseId: selectedType === "Doctor" ? licenseId : null,
-        email: email,
-        password: password,
-        doctor: selectedType === "Doctor" ? true : false,
-      });
-      alert("Signed Up");
+    console.log("asdf");
+    try {
+      if (email && password) {
+        console.log("Signing up with email and password");
+        await signInWithEmailAndPassword(auth, email, password);
+      }
+    } catch (error) {
+      setWrongCredentials(true);
     }
-    if (password !== confirmPassword) {
-      setPasswordMatch(false);
-    }
-    setLoginVisible(false);
-  }
 
-  useEffect(() => {
-    if (user) {
-      setLoginVisible(false);
-    } else {
-      setLoginVisible(true);
-    }
-  }, [user]);
+    const batch = writeBatch(db);
+
+    // Create a new user document with an auto generated id
+    const newUserRef = doc(db, "user", email);
+
+    batch.set(newUserRef, {
+      name: name,
+      email: email,
+      password: password,
+      createdAt: new Date().toISOString(),
+    });
+
+    await batch.commit();
+
+    alert("Signed Up");
+  }
 
   async function handleLogin({
     email,
@@ -106,6 +99,7 @@ const LoginSection: React.FC = () => {
       setWrongCredentials(true);
     }
   }
+
   return (
     <>
       {!user ? (
@@ -149,6 +143,7 @@ const LoginSection: React.FC = () => {
                           }}
                         />
                       </DialogTrigger>
+
                       <DialogContent className="py-8">
                         <div className="flex gap-x-5 justify-between">
                           <div className="flex flex-col w-1/2 justify-center items-center">
@@ -290,7 +285,7 @@ const LoginSection: React.FC = () => {
                                 {CsignUp ? (
                                   <button
                                     onClick={() => {
-                                      handleSignUp({ email, password });
+                                      handleSignUp({ email, name, password });
                                     }}
                                     className={`bg-green2 px-6 py-2 rounded-xl text-white `}
                                   >

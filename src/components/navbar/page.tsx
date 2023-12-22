@@ -3,6 +3,8 @@ import Image from "next/image";
 import Button from "../button/page";
 import { motion } from "framer-motion";
 import { useAuthContext } from "@/context/AuthContext";
+import { getAuth } from "firebase/auth";
+import firebase_app from "@/firebase/config";
 import { signOut } from "firebase/auth";
 
 import {
@@ -16,7 +18,14 @@ import {
 } from "@/components/ui/dialog";
 
 const Navbar: React.FC = () => {
+  const auth = getAuth(firebase_app);
+
   const { user } = useAuthContext() as { user: any };
+
+  async function signOutSSR() {
+    await signOut(auth);
+  }
+
   return (
     <motion.nav
       className="flex justify-between border-b md:px-4 py-2 px-2 items-center "
@@ -36,7 +45,7 @@ const Navbar: React.FC = () => {
       {user ? (
         <div
           onClick={() => {
-            signOut;
+            signOutSSR();
           }}
         >
           <Button text={"Logout"} />

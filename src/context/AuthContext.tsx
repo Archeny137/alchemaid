@@ -7,9 +7,10 @@ import {
   ReactNode,
 } from "react";
 import { getAuth, onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../firebase/config";
+import firebase_app from "@/firebase/config";
 
 // Initialize Firebase auth instance
+const auth = getAuth(firebase_app);
 
 // Create the authentication context
 export const AuthContext = createContext({});
@@ -31,6 +32,7 @@ export function AuthContextProvider({
   useEffect(() => {
     // Subscribe to the authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log("Auth State changed");
       if (user) {
         // User is signed in
         setUser(user);
@@ -48,6 +50,8 @@ export function AuthContextProvider({
 
   // Provide the authentication context to child components
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user }}>
+      {loading ? <div>Loading...</div> : children}
+    </AuthContext.Provider>
   );
 }
