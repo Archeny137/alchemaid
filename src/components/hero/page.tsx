@@ -3,6 +3,7 @@ import FeatureCard from "../featureCard/page";
 import { motion } from "framer-motion";
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
+import { FcAndroidOs } from "react-icons/fc";
 import {
   Dialog,
   DialogContent,
@@ -208,7 +209,7 @@ const Hero = () => {
             for Informed Healthcare Decisions and Better Outcomes
           </p>
 
-          <div className="flex">
+          <div className="flex md:flex-row flex-col gap-5">
             <Dialog>
               <DialogTrigger>
                 <button className="md:text-3xl text-xl bg-white w-fit md:px-12 md:py-4 px-6 py-2 rounded-2xl mt-8 font-semibold hover:scale-110 duration-300">
@@ -312,6 +313,15 @@ const Hero = () => {
                 </DialogHeader>
               </DialogContent>
             </Dialog>
+
+            <a
+              href="https://firebasestorage.googleapis.com/v0/b/alchemaid.appspot.com/o/alchemaid.apk?alt=media&token=e3005bd2-2178-46bc-aba6-68939703ce63"
+              download
+            >
+              <button className="md:text-3xl text-xl flex bg-white w-fit md:px-12 md:py-4 px-6 py-2 rounded-2xl mt-8 font-semibold hover:scale-110 duration-300">
+                <FcAndroidOs size={50} /> Download Android App
+              </button>
+            </a>
           </div>
         </div>
         <Image
