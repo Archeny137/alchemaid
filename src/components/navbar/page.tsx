@@ -19,15 +19,19 @@ const Navbar: React.FC = () => {
   const { user } = useAuthContext() as { user: any };
   return (
     <motion.nav
-      className="flex justify-between bg-green1/50 md:px-4 py-2 px-2 items-center"
+      className="flex justify-between border-b md:px-4 py-2 px-2 items-center "
       initial={{ opacity: 0, y: -200 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="flex items-center">
-        <Image src={"/logo.png"} alt={"logo"} width={50} height={50} />
-        <h1 className="text-black md:text-2xl text-xl font-bold">Alchemaid</h1>
-      </div>
+      <a href="/">
+        <div className="flex items-center">
+          <Image src={"/logo.png"} alt={"logo"} width={50} height={50} />
+          <h1 className="text-black md:text-2xl text-xl font-bold">
+            Alchemaid
+          </h1>
+        </div>
+      </a>
 
       {user ? (
         <div

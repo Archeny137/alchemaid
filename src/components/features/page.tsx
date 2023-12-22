@@ -22,6 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "../ui/input";
+import Button from "../button/page";
 const Features = () => {
   const [selected, setSelected] = useState("pneumonia");
   const [file, setFile] = useState<File | null>(null);
@@ -61,6 +62,7 @@ const Features = () => {
       const capturedImage = webcamRef.current.getScreenshot();
       setImageSrc(capturedImage);
       setFile(base64ToFile(capturedImage || "", "image.jpeg"));
+      setCameraOpen(false);
     }
   };
 
@@ -123,7 +125,6 @@ const Features = () => {
       }
     }
   }
-  console.log(imageSrc);
 
   async function uploadeye() {
     if (file) {
@@ -190,7 +191,7 @@ const Features = () => {
   return (
     <>
       <motion.div
-        className="w-full flex justify-center bg-green1/30 py-16"
+        className="w-full flex justify-center bg-green-100 py-24"
         initial={{ opacity: 0, x: -100 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
@@ -210,9 +211,11 @@ const Features = () => {
                         height={150}
                       />
                     </DialogTrigger>
-                    <DialogContent>
+                    <DialogContent className="max-w-[90vw] md:max-w-[40%]">
                       <DialogHeader>
-                        <DialogTitle>{card.title}</DialogTitle>
+                        <DialogTitle className="text-center py-6">
+                          {card.title}
+                        </DialogTitle>
                         <DialogDescription>
                           <Select
                             onValueChange={(e) => {
@@ -241,22 +244,21 @@ const Features = () => {
                             </SelectContent>
                           </Select>
 
-                          <div className="py-6 flex flex-col space-y-4">
-                            <div className="flex">
+                          <div className="py-6 flex flex-col space-y-4 justify-center">
+                            <div className=" md:flex md:justify-center grid grid-cols-1 gap-5">
                               <Input type="file" onChange={handleFileChange} />
 
                               <Dialog>
-                                <DialogTrigger>
-                                  <button onClick={() => setCameraOpen(true)}>
+                                <DialogTrigger className="md:hidden w-full">
+                                  <button
+                                    onClick={() => setCameraOpen(true)}
+                                    className="border rounded-lg px-6 py-2"
+                                  >
                                     Open Camera
                                   </button>
                                 </DialogTrigger>
                                 <DialogContent className="flex flex-col">
-                                  <Webcam
-                                    ref={webcamRef}
-                                    width={100}
-                                    height={200}
-                                  />
+                                  <Webcam className="w-95vw h-[80dvh]" />
                                   <button onClick={handleCapture}>
                                     Capture
                                   </button>
@@ -265,7 +267,8 @@ const Features = () => {
                             </div>
 
                             {imageSrc && <img src={imageSrc} alt="" />}
-                            <button
+
+                            <div
                               onClick={() => {
                                 if (selected === "pneumonia") {
                                   uploadchest();
@@ -277,15 +280,49 @@ const Features = () => {
                                   uploadskin();
                                 }
                               }}
+                              className="flex justify-center pt-4"
                             >
-                              Upload
-                            </button>
-                            {loading ? <p>Loading...</p> : <p>{result}</p>}
+                              <Button text="Upload" />
+                            </div>
+
+                            <div className="flex justify-center">
+                              {loading ? (
+                                <div className="flex flex-col space-y-4">
+                                  <h1 className="text-green-500 md:text-xl text-md">
+                                    Results
+                                  </h1>
+                                  <p>Loading...</p>{" "}
+                                </div>
+                              ) : (
+                                <div className="flex flex-col space-y-4">
+                                  <h1 className="text-green-500 md:text-xl text-md text-center text-semibold">
+                                    Results
+                                  </h1>
+                                  <p>
+                                    Diagnosis: <span>{result}</span>
+                                  </p>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </DialogDescription>
                       </DialogHeader>
                     </DialogContent>
                   </Dialog>
+                </>
+              );
+            } else if (card.title === "ALCHBOT") {
+              return (
+                <>
+                  <a href="/alchbot">
+                    <FeatureCard
+                      key={index}
+                      img={card.img}
+                      title={card.title}
+                      width={150}
+                      height={150}
+                    />
+                  </a>
                 </>
               );
             } else {

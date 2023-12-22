@@ -1,4 +1,4 @@
-import firebase_app from "../config";
+import { firebase_app } from "../config";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
 // Get the Firestore instance

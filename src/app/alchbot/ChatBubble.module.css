@@ -1,0 +1,21 @@
+/* ChatBubble.module.css */
+.chatBubble {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 15px;
+  display: block;
+  word-wrap: break-word;
+}
+
+.user {
+  background-color: #4caf50; /* Green background for user messages */
+  color: white;
+  align-self: flex-end;
+}
+
+.bot {
+  background-color: #dad9d9;
+  border: #000000 1px;
+  color: #000000;
+  align-self: flex-start;
+}

@@ -11,7 +11,7 @@ const FeatureCard: React.FC<CardProps> = ({ img, title, width, height }) => {
   return (
     <>
       <motion.div
-        className="rounded-3xl max-w-[25rem] bg-white flex flex-col space-y-5 justify-center items-center"
+        className="rounded-3xl max-w-[25rem] bg-white flex flex-col space-y-5 justify-center items-center h-full"
         whileHover={{ scale: 1.1 }}
         transition={{ duration: 0.4 }}
       >
