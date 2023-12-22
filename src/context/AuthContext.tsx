@@ -37,7 +37,7 @@ export function AuthContextProvider({
       console.log("Auth State changed");
       if (user) {
         // User is signed in
-        window.location.href = "/#";
+
         setUser(user);
       } else {
         // User is signed out
